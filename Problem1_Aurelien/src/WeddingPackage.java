@@ -1,76 +1,18 @@
-
 /**
- * Defines the methods for a wedding package.
+ * Abstract base class representing a generic Wedding Package.
  *
  * @author Cooper Aurelien
  */
-public interface WeddingPackage {
+public abstract class WeddingPackage {
+    protected Venue venue;
+    protected Catering catering;
+    protected Decorations decorations;
+    protected Photography photography;
 
     /**
-     * Gets the wedding venue.
+     * Abstract method to obtain detailed information about the wedding package.
      *
-     * @return the venue
+     * @return String detailing package contents
      */
-    String getVenue();
-
-    /**
-     * Sets the wedding venue.
-     *
-     * @param venue the new venue
-     */
-    void setVenue(String venue);
-
-    /**
-     * Gets the catering service.
-     *
-     * @return the catering service
-     */
-    String getCatering();
-
-    /**
-     * Sets the catering service.
-     *
-     * @param catering the new catering service
-     */
-    void setCatering(String catering);
-
-    /**
-     * Gets the wedding decorations.
-     *
-     * @return the decorations
-     */
-    String getDecorations();
-
-    /**
-     * Sets the wedding decorations.
-     *
-     * @param decorations the new decorations
-     */
-    void setDecorations(String decorations);
-
-    /**
-     * Gets the photography service.
-     *
-     * @return the photography service
-     */
-    String getPhotography();
-
-    /**
-     * Sets the photography service.
-     *
-     * @param photography the new photography service
-     */
-    void setPhotography(String photography);
-
-    /**
-     * Gets the wedding package name.
-     *
-     * @return the package name
-     */
-    String getPackageName();
-
-    /**
-     * Displays the wedding package details.
-     */
-    void displayDetails();
+    public abstract String getDetails();
 }

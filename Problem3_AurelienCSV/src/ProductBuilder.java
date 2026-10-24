@@ -1,47 +1,30 @@
 /**
- * Builds customized products.
+ * Interface establishing builder methods to create Product instances.
  *
  * @author Cooper Aurelien
  */
-public class ProductBuilder {
-
-    private String name;
-    private String processor;
-    private int ram;
-    private int storage;
-    private double price;
-
-    public ProductBuilder setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public ProductBuilder setProcessor(String processor) {
-        this.processor = processor;
-        return this;
-    }
-
-    public ProductBuilder setRam(int ram) {
-        this.ram = ram;
-        return this;
-    }
-
-    public ProductBuilder setStorage(int storage) {
-        this.storage = storage;
-        return this;
-    }
-
-    public ProductBuilder setPrice(double price) {
-        this.price = price;
-        return this;
-    }
+public interface ProductBuilder {
+    /**
+     * Populates builder fields from a ProductSpec.
+     *
+     * @param spec input specification model
+     * @return builder reference
+     */
+    ProductBuilder fromSpec(ProductSpec spec);
 
     /**
-     * Builds the customized product.
+     * Sets custom key-value specifications.
      *
-     * @return customized product
+     * @param key spec attribute key
+     * @param value spec attribute value
+     * @return builder reference
      */
-    public Product build() {
-        return new CustomizedProduct(name, processor, ram, storage, price);
-    }
+    ProductBuilder setAttribute(String key, String value);
+
+    /**
+     * Constructs the final Product instance.
+     *
+     * @return completed Product object
+     */
+    Product build();
 }

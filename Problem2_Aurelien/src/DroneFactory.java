@@ -1,36 +1,27 @@
-
 /**
- * Centrally creates drones based on manufacturer and type.
+ * Abstract Factory interface for manufacturing drones.
  *
  * @author Cooper Aurelien
  */
-public class DroneFactory {
+public interface DroneFactory {
+    /**
+     * Factory method creating a SurveillanceDrone.
+     *
+     * @return Drone instance
+     */
+    Drone createSurveillanceDrone();
 
     /**
-     * Creates the requested drone.
+     * Factory method creating a DeliveryDrone.
      *
-     * @param manufacturer the selected manufacturer factory
-     * @param type the requested drone type
-     * @return the drone, or null if the selection is invalid
+     * @return Drone instance
      */
-    public Drone createDrone(DroneManufacturer manufacturer, String type) {
+    Drone createDeliveryDrone();
 
-        if (manufacturer == null || type == null) {
-            return null;
-        }
-
-        if (type.equalsIgnoreCase("surveillance")) {
-            return manufacturer.createSurveillanceDrone();
-        }
-
-        if (type.equalsIgnoreCase("delivery")) {
-            return manufacturer.createDeliveryDrone();
-        }
-
-        if (type.equalsIgnoreCase("agricultural")) {
-            return manufacturer.createAgriculturalDrone();
-        }
-
-        return null;
-    }
+    /**
+     * Factory method creating an AgriculturalDrone.
+     *
+     * @return Drone instance
+     */
+    Drone createAgriculturalDrone();
 }

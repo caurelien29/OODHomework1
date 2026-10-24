@@ -1,72 +1,64 @@
-
 /**
- * Allows customers to customize a wedding package.
+ * Builder class for step-by-step construction of a WeddingPackage object.
  *
  * @author Cooper Aurelien
  */
 public class WeddingPackageBuilder {
-
-    private WeddingPackage wedding;
-
-    /**
-     * Creates a builder for a wedding package.
-     *
-     * @param wedding the package to customize
-     */
-    public WeddingPackageBuilder(WeddingPackage wedding) {
-        this.wedding = wedding;
-    }
+    private Venue venue;
+    private Catering catering;
+    private Decorations decorations;
+    private Photography photography;
 
     /**
-     * Sets the wedding venue.
+     * Sets the venue for the builder.
      *
-     * @param venue the selected venue
-     * @return this builder
+     * @param venue the venue object
+     * @return current instance of WeddingPackageBuilder
      */
-    public WeddingPackageBuilder setVenue(String venue) {
-        wedding.setVenue(venue);
+    public WeddingPackageBuilder setVenue(Venue venue) {
+        this.venue = venue;
         return this;
     }
 
     /**
-     * Sets the catering service.
+     * Sets the catering for the builder.
      *
-     * @param catering the selected catering service
-     * @return this builder
+     * @param catering the catering object
+     * @return current instance of WeddingPackageBuilder
      */
-    public WeddingPackageBuilder setCatering(String catering) {
-        wedding.setCatering(catering);
+    public WeddingPackageBuilder setCatering(Catering catering) {
+        this.catering = catering;
         return this;
     }
 
     /**
-     * Sets the decorations.
+     * Sets the decorations for the builder.
      *
-     * @param decorations the selected decorations
-     * @return this builder
+     * @param decorations the decorations object
+     * @return current instance of WeddingPackageBuilder
      */
-    public WeddingPackageBuilder setDecorations(String decorations) {
-        wedding.setDecorations(decorations);
+    public WeddingPackageBuilder setDecorations(Decorations decorations) {
+        this.decorations = decorations;
         return this;
     }
 
     /**
-     * Sets the photography service.
+     * Sets the photography package for the builder.
      *
-     * @param photography the selected photography service
-     * @return this builder
+     * @param photography the photography object
+     * @return current instance of WeddingPackageBuilder
      */
-    public WeddingPackageBuilder setPhotography(String photography) {
-        wedding.setPhotography(photography);
+    public WeddingPackageBuilder setPhotography(Photography photography) {
+        this.photography = photography;
         return this;
     }
 
     /**
-     * Returns the customized wedding package.
+     * Constructs and returns the final WeddingPackage.
      *
-     * @return the completed wedding package
+     * @return built WeddingPackage object
      */
     public WeddingPackage build() {
-        return wedding;
+        return new DestinationWedding(venue, catering, decorations, photography);
     }
 }

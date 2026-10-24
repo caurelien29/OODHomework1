@@ -1,47 +1,42 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * Represents a product in the system.
+ * Final Product object generated via the ProductBuilder interface.
  *
  * @author Cooper Aurelien
  */
-public interface Product {
+public class Product {
+    private String name;
+    private String type;
+    private Map<String, String> specs = new HashMap<>();
+    private double price;
 
     /**
-     * Returns the product name.
+     * Constructs a fully initialized Product.
      *
-     * @return product name
+     * @param name name of the product
+     * @param type category/type of product
+     * @param specs specifications map
+     * @param price base retail price
      */
-    String getName();
+    public Product(String name, String type, Map<String, String> specs, double price) {
+        this.name = name;
+        this.type = type;
+        this.specs = specs;
+        this.price = price;
+    }
+
+    public Map<String, String> getSpecs() { return specs; }
+    public void setPrice(double price) { this.price = price; }
+    public double getPrice() { return price; }
 
     /**
-     * Returns the processor.
+     * Formats detailed summary of the product attributes.
      *
-     * @return processor
+     * @return string overview of the product
      */
-    String getProcessor();
-
-    /**
-     * Returns the RAM.
-     *
-     * @return RAM in GB
-     */
-    int getRam();
-
-    /**
-     * Returns the storage.
-     *
-     * @return storage in GB
-     */
-    int getStorage();
-
-    /**
-     * Returns the price.
-     *
-     * @return product price
-     */
-    double getPrice();
-
-    /**
-     * Displays product details.
-     */
-    void displayDetails();
+    public String getDetails() {
+        return "Product: " + name + " [" + type + "] | Price: $" + price + " | Specs: " + specs;
+    }
 }
