@@ -27,6 +27,8 @@ public class Product {
         this.price = price;
     }
 
+    public String getName() { return name; }
+    public String getType() { return type; }
     public Map<String, String> getSpecs() { return specs; }
     public void setPrice(double price) { this.price = price; }
     public double getPrice() { return price; }
@@ -38,5 +40,19 @@ public class Product {
      */
     public String getDetails() {
         return "Product: " + name + " [" + type + "] | Price: $" + price + " | Specs: " + specs;
+    }
+
+    /**
+     * Prints row details with each component clearly labeled.
+     */
+    public void printLabeledComponents() {
+        System.out.println("Product Name: " + name);
+        System.out.println("Product Type: " + type);
+        System.out.println("Processor: " + specs.getOrDefault("Processor", "N/A"));
+        System.out.println("RAM: " + specs.getOrDefault("RAM", "N/A"));
+        System.out.println("Storage: " + specs.getOrDefault("Storage", "N/A"));
+        System.out.println("Integrated Graphics/Media: " + specs.getOrDefault("Integrated", "N/A"));
+        System.out.println("Operating System: " + specs.getOrDefault("Operating System", "N/A"));
+        System.out.println("Price: $" + price);
     }
 }

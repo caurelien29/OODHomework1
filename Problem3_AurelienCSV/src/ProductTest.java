@@ -1,30 +1,22 @@
-// Reads file data character-by-character or line-by-line using a buffer for efficient file reading
 import java.io.BufferedReader;
-
-// Opens and reads characters from a file on disk
 import java.io.FileReader;
-
-// Handles errors that may occur during file reading/writing operations
 import java.io.IOException;
-
-// Provides a dynamic, resizable array to store objects
 import java.util.ArrayList;
-
-// Defines an ordered list structure (implemented by ArrayList)
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Driver class demonstrating CSV file reading, Adapter conversion,
- * step-by-step Builder customization, and Extra Credit price matching.
+ * step-by-step Builder customization, price matching, and dynamic search.
  *
  * @author Cooper Aurelien
  */
 public class ProductTest {
 
     /**
-     * Reads all default products directly from products.csv.
+     * Reads all default products directly from professor's CSV file.
      *
-     * @param filePath path to the products.csv file
+     * @param filePath path to the CSV file
      * @return list of parsed Product instances
      */
     public static List<Product> readProductsFromCSV(String filePath) {
@@ -37,8 +29,8 @@ public class ProductTest {
             while ((line = br.readLine()) != null) {
                 line = line.trim();
 
-                // Skip empty lines or header line starting with "Name"
-                if (line.isEmpty() || line.startsWith("Name")) {
+                // Skip empty lines
+                if (line.isEmpty() || line.startsWith("ProductName") || line.startsWith("Name")) {
                     continue;
                 }
 
@@ -46,7 +38,9 @@ public class ProductTest {
                 ProductSpec spec = adapter.toSpec(csvRow);
 
                 if (spec != null) {
-                    LaptopBuilder builder = new LaptopBuilder();
+                    ProductBuilder builder = spec.getType().equalsIgnoreCase("Smartphone")
+                            ? new SmartphoneBuilder()
+                            : new LaptopBuilder();
                     Product product = builder.fromSpec(spec).build();
                     defaultProducts.add(product);
                 }
@@ -59,7 +53,7 @@ public class ProductTest {
     }
 
     /**
-     * Extra credit matching algorithm adjusting price when Processor, RAM, and Storage match.
+     * Matching algorithm adjusting price when Processor, RAM, and Storage match.
      *
      * @param customProduct target custom product
      * @param defaultProducts baseline list of CSV products
@@ -80,7 +74,7 @@ public class ProductTest {
 
                 customProduct.setPrice(defaultProd.getPrice());
                 System.out.println("\nExact hardware match found with '" + defaultProd.getDetails()
-                        + "'! Price adjusted from $800.00 to $" + defaultProd.getPrice());
+                        + "'! Price adjusted to $" + defaultProd.getPrice());
                 return;
             }
         }
@@ -95,29 +89,49 @@ public class ProductTest {
     public static void main(String[] args) {
         System.out.println("=== Problem 3: Product Customization & Integration System ===");
 
-        // 1. Read default supplier products from actual products.csv
-        List<Product> defaultProducts = readProductsFromCSV("products.csv");
+        // 1. Read default products from downloaded CSV file
+        List<Product> defaultProducts = readProductsFromCSV("Sample CSV.csv");
 
-        System.out.println("\n--- Default Supplier Products ---");
+        // 2. Display all products and their characteristics directly from the CSV
+        System.out.println("\n--- Default Supplier Products Loaded From CSV ---");
         for (Product p : defaultProducts) {
             System.out.println(p.getDetails());
         }
 
-        // 2. Build a custom laptop step-by-step using LaptopBuilder
+        // 3. Build custom product step-by-step
         LaptopBuilder customBuilder = new LaptopBuilder();
         Product customLaptop = customBuilder.setAttribute("Processor", "Intel i5")
-                .setAttribute("RAM", "16")
-                .setAttribute("Storage", "512")
-                .setAttribute("OS", "Windows 11")
+                .setAttribute("RAM", "8")
+                .setAttribute("Storage", "256")
+                .setAttribute("OS", "Windows 10")
                 .build();
 
         System.out.println("\n--- Customer Customized Product ---");
         System.out.println(customLaptop.getDetails());
 
-        // 3. Compare with CSV products and apply Extra Credit price adjustment
         checkAndAdjustPrice(customLaptop, defaultProducts);
 
-        System.out.println("\n--- Final Customer Customized Product ---");
-        System.out.println(customLaptop.getDetails());
+        // 4. Accept user input to search for any product name (e.g., Smartphone Model X)
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nEnter a product name to search for in the data: ");
+
+        String searchQuery = scanner.nextLine().trim();
+
+        System.out.println("\n--- Search Result ---");
+        boolean found = false;
+        for (Product product : defaultProducts) {
+            if (product.getName().equalsIgnoreCase(searchQuery)) {
+                System.out.println("Product found! Labeled components:");
+                product.printLabeledComponents();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No product found matching: '" + searchQuery + "'");
+        }
+
+        scanner.close();
     }
 }
